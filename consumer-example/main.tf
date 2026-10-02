@@ -22,7 +22,7 @@ resource "azurerm_resource_group" "this" {
 }
 
 module "vnet" {
-  source = "git::https://github.com/josepht96/azure-terraform.git//modules/azure-vnet?ref=azure-vnet/v0.3.0"
+  source = "git::https://github.com/josepht96/azure-terraform.git//modules/azure-vnet?ref=azure-vnet/v0.5.0"
 
   name                = "vnet-demo"
   resource_group_name = azurerm_resource_group.this.name
@@ -36,7 +36,7 @@ module "vnet" {
 }
 
 module "vm" {
-  source = "git::https://github.com/josepht96/azure-terraform.git//modules/azure-vm?ref=azure-vm/v0.1.0"
+  source = "git::https://github.com/josepht96/azure-terraform.git//modules/azure-vm?ref=azure-vm/v0.5.0"
 
   name                 = "vm-demo"
   resource_group_name  = azurerm_resource_group.this.name
@@ -46,7 +46,7 @@ module "vm" {
 }
 
 module "app" {
-  source = "git::https://github.com/josepht96/azure-terraform.git//modules/azure-app-service?ref=azure-app-service/v0.1.0"
+  source = "git::https://github.com/josepht96/azure-terraform.git//modules/azure-app-service?ref=azure-app-service/v0.5.0"
 
   name                       = "app-demo"
   resource_group_name        = azurerm_resource_group.this.name

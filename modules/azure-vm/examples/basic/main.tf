@@ -37,7 +37,7 @@ module "vm" {
   resource_group_name  = azurerm_resource_group.this.name
   location             = azurerm_resource_group.this.location
   subnet_id            = azurerm_subnet.vm.id
-  admin_ssh_public_key = "ssh-ed25519 AAAA-placeholder"
+  admin_ssh_public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKhn+vY+xgBtEluZx1v8/AEw34hLuiU2xY3Os6MQx3yz terraform-test-only" # throwaway test key
 }
 
 output "private_ip_address" {

@@ -18,7 +18,8 @@ azure-terraform/
 │       ├── versions.tf
 │       ├── CHANGELOG.md
 │       ├── README.md
-│       └── examples/basic/    # source = "../.." (local working copy)
+│       ├── examples/basic/    # source = "../.." (local working copy)
+│       └── tests/basic.tftest.hcl  # terraform test, mock provider
 ├── consumer-example/          # source = "git::...?ref=<module>/vX.Y.Z" (released tags only)
 ├── docs/consumer.md
 └── CLAUDE.md
@@ -67,6 +68,7 @@ For each module, its example, and the consumer:
 terraform fmt -check -recursive
 terraform init -backend=false
 terraform validate
+terraform test        # modules only
 ```
 
-No Azure credentials are needed for any of these.
+No Azure credentials are needed for any of these. Tests use `mock_provider "azurerm" {}` (Terraform >= 1.7), so `apply` runs inside tests create nothing; the real provider still validates argument formats, so test values (e.g. SSH keys) must be well-formed.
