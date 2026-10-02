@@ -23,7 +23,7 @@ resource "azurerm_resource_group" "this" {
 }
 
 module "vnet" {
-  source = "git::https://github.com/josepht96/azure-terraform.git//modules/azure-vnet?ref=azure-vnet/v0.1.0"
+  source = "git::https://github.com/josepht96/azure-terraform.git//modules/azure-vnet?ref=azure-vnet/v0.2.0"
 
   name                = "vnet-demo"
   resource_group_name = azurerm_resource_group.this.name
