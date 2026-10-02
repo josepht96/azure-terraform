@@ -83,7 +83,6 @@ terraform {
 
 provider "azurerm" {
   features {}
-  subscription_id = "00000000-0000-0000-0000-000000000000" # placeholder; never applied
 }
 
 variable "admin_ssh_public_key" {
@@ -135,7 +134,8 @@ module "app" {
 - `//` separates the repo URL from the subdirectory inside it.
 - `?ref=` is the version. Git sources don't support the `version =` argument (that's only for registry modules).
 - `source` must be a literal string. No variables, no locals.
-- After changing a `ref`, run `terraform init -upgrade`.
+- After changing a `ref`, run `terraform init`. It reinstalls any module whose `source` string changed.
+- `terraform init -upgrade` is for when the `source` string is the same but the target may have moved: a branch ref like `?ref=main`, a registry version range like `~> 1.0`, or newer provider versions.
 - Downloaded modules live in `.terraform/modules/`; see `.terraform/modules/modules.json` for what was fetched.
 - `.terraform.lock.hcl` locks **providers only**, not modules. The pinned tag is your only lock, so always pin a tag rather than a branch.
 
@@ -151,6 +151,6 @@ Once the consumer validates, try these. Each one shows something you can talk ab
 
 1. **Independent versions.** Add an optional `custom_data` input to `azure-vm`, release `azure-vm/v0.2.0`, and bump only the VM `ref` in the consumer. VNet and App Service stay at `v0.1.0`.
 2. **Breaking change.** Rename the `azure-vnet` output `subnet_ids` to `subnets`, release `azure-vnet/v0.2.0`, and bump the consumer. `validate` fails until the consumer is updated. This is why output names are part of the contract.
-3. **Forgot to upgrade.** Change a `ref` and run `terraform validate` without `init -upgrade`. Read the error.
-4. **Pin to a branch.** Point one module at `?ref=main`, push an unrelated change to the module, and run `init -upgrade` again. The consumer silently picks it up, which is why you pin tags.
+3. **Forgot to init.** Change a `ref` and run `terraform validate` without running `init` first. Read the error.
+4. **Pin to a branch.** Point one module at `?ref=main` and `init`. Push a change to the module and run plain `init`: nothing changes, because the `source` string is the same. Run `init -upgrade`: the consumer silently picks up the new code. Pinning a branch means your version depends on when you last ran `-upgrade`, which is why you pin tags.
 5. **Tag before it exists.** Bump a `ref` to a tag you haven't pushed yet and run `init`. This is the release-ordering problem from `CLAUDE.md`.

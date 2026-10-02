@@ -57,7 +57,7 @@ git push origin azure-vm/v0.2.0
 A tag must exist on GitHub before the consumer can use it, so a change always takes two steps:
 
 1. Change the module, update its `CHANGELOG.md`, commit, push, tag, push the tag.
-2. Bump that module's `?ref=` in `consumer-example/`, then `terraform init -upgrade && terraform validate`.
+2. Bump that module's `?ref=` in `consumer-example/`, then `terraform init && terraform validate`.
 
 ## Checks
 

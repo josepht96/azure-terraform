@@ -9,12 +9,11 @@ terraform {
 
 provider "azurerm" {
   features {}
-  subscription_id = "00000000-0000-0000-0000-000000000000" # placeholder; never applied
 }
 
 variable "admin_ssh_public_key" {
   type    = string
-  default = "ssh-ed25519 AAAA-placeholder"
+  default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDSfOQiaBumVexEL+6V+6v8HLDYXLFI3nirPGA+dEtxcPWAYf9tBMoDr6d1o1fJiap+uBrBIieLySlwlgm+S3Mk37FRi7v+m/ONymZcJu2KJqpBUU/uBZpR50EJr62HiT2Yr5ARW4pTCE58CPSFJ8VK31XaFW5jlehOqUefxBWW9AqUF02+JBtSKKw/SurWOxSAMPQRT6+LJi7t3kenOMuHCMqgBrN34xol++OWrE+NFFw6RpCDK1joiGJjjWNPjUJRa4kZi5iQZQ5rXgxBLZOllteyg2C2eoogC2J1KrYenBTOUKz7ciATdswHdB+si7ypWlWzEstgo41hljzdiKMFebag0bQ9XbpMq6IdGenA5sM4GTWMv7y57vnEiHMeuMMKqJGXq+YIP4yh+eW/BHKysM6XpYljVK7QOc0IwEgMxyIYx7Cfgx7hBhBhzDrJ6wkBRuwcY6i4n3p99/u+JdwA3D9YAQ2QC2AGdNOmpxffydpZfaEJ0kGAPsvDgSSBLlVW5vXB1ZiSmjctcGdqYl7o3DmKYF086KNXQAI+PAaL/b1wfr2OuBKiV6lWhg5Rma8qVx8Vzm2I23cvXwlSxi6+D9FOFIZtPlXF2NFRYj5+detcxTUh27aZ/dOEPoILJbPuHuA4BR175u28pD4agLRUeWUCJvozcdYC/TCAL46xmQ== joe@DESKTOP-R66PFDP"
 }
 
 resource "azurerm_resource_group" "this" {
@@ -23,7 +22,7 @@ resource "azurerm_resource_group" "this" {
 }
 
 module "vnet" {
-  source = "git::https://github.com/josepht96/azure-terraform.git//modules/azure-vnet?ref=azure-vnet/v0.2.0"
+  source = "git::https://github.com/josepht96/azure-terraform.git//modules/azure-vnet?ref=azure-vnet/v0.3.0"
 
   name                = "vnet-demo"
   resource_group_name = azurerm_resource_group.this.name
